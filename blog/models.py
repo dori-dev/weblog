@@ -18,7 +18,7 @@ class Post(models.Model):
     )
     slug = models.CharField(
         max_length=256,
-        unique_for_date='published',
+        unique=True,
     )
     body = models.TextField()
     author = models.ForeignKey(
