@@ -11,7 +11,7 @@ def post_list(request: WSGIRequest):
     return render(request, 'blog/post/list.html', context)
 
 
-def post_details(request: WSGIRequest, slug: str):
+def post_detail(request: WSGIRequest, slug: str):
     post = get_object_or_404(Post, slug=slug, status='published')
     context = {
         'post': post
