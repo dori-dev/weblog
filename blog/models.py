@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status='published')
+
+
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = "draft"
@@ -21,13 +26,13 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='blog_posts',
     )
-    created = models.DateTimeField(
+    created_time = models.DateTimeField(
         auto_now_add=True,
     )
-    updated = models.DateTimeField(
+    updated_time = models.DateTimeField(
         auto_now=True,
     )
-    published = models.DateTimeField(
+    published_time = models.DateTimeField(
         default=timezone.now,
     )
     status = models.CharField(
@@ -35,11 +40,13 @@ class Post(models.Model):
         choices=Status.choices,
         default='draft',
     )
+    objects = models.Manager()
+    published = PublishedManager()
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = (
-            '-published',
+            '-published_time',
         )
