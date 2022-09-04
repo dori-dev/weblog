@@ -48,6 +48,36 @@ p.date {
     font-weight: bold;
 }
 
+
+.pagination .step-links {
+    display: flex;
+}
+
+.pagination a,
+.pagination .current {
+    border-radius: 5px;
+    margin: 0 3px;
+    padding: 3px 6px;
+}
+
+a.disable {
+    color: #777;
+    pointer-events: none;
+    cursor: unset
+}
+
+.pagination a svg {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    fill: #00abff;
+    margin: 0;
+}
+
+.pagination a.disable svg {
+    fill: #777;
+}
+
 /* forms */
 label {
     float: left;
