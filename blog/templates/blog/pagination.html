@@ -1,39 +1,71 @@
 <div class="pagination">
   <span class="step-links">
     {% if page.has_previous %}
-    <a href="?page={{ page.previous_page_number }}">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-        <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
-      </svg>
-    </a>
-    {% if page.previous_page_number|add:-1 >= 1 and not page.has_next %}
-    <a href="?page={{ page.previous_page_number|add:-1 }}">{{ page.previous_page_number|add:-1 }}</a>
-    {% endif %}
-    <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+      <!-- if has previous page -->
+      <a href="?page=1" class="first-previous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/>
+        </svg>
+      </a>
+      <a href="?page={{ page.previous_page_number }}" class="previous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+          <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+        </svg>
+      </a>
+      {% if page.previous_page_number|add:-1 >= 1 and not page.has_next %}
+      <a href="?page={{ page.previous_page_number|add:-1 }}">{{ page.previous_page_number|add:-1 }}</a>
+      {% endif %}
+      <a href="?page={{ page.previous_page_number }}">{{ page.previous_page_number }}</a>
+      <!-- if has previous page -->
     {% else %}
-    <a class="disable">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-        <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
-      </svg>
-    </a>
+      <!-- else -->
+      <a class="disable first-previous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/>
+        </svg>
+      </a>
+      <a class="disable previous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+          <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+        </svg>
+      </a>
+      <!-- else -->
     {% endif %}
-    <span class="current">{{ page.number }}</span>
+
+    <span class="current">
+      {{ page.number }}
+    </span>
+
     {% if page.has_next %}
-    <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
-    {% if page.next_page_number|add:1 <= page.paginator.num_pages and not page.has_previous %}
-    <a href="?page={{ page.next_page_number|add:1 }}">{{ page.next_page_number|add:1 }}</a>
-    {% endif %}
-    <a href="?page={{ page.next_page_number }}">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
-      </svg>
-    </a>
+      <!-- if has next page -->
+      <a href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a>
+      {% if page.next_page_number|add:1 <= page.paginator.num_pages and not page.has_previous %}
+      <a href="?page={{ page.next_page_number|add:1 }}">{{ page.next_page_number|add:1 }}</a>
+      {% endif %}
+      <a href="?page={{ page.next_page_number }}" class="next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+          <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+        </svg>
+      </a>
+      <a href="?page={{ page.paginator.num_pages }}" class="end-next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/>
+        </svg>
+      </a>
+      <!-- if has next page -->
     {% else %}
-    <a class="disable">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-        <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
-      </svg>
-    </a>
+      <!-- else -->
+      <a class="disable next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+          <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+        </svg>
+      </a>
+      <a class="disable end-next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/>
+        </svg>
+      </a>
+      <!-- else -->
     {% endif %}
   </span>
 </div>

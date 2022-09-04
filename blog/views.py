@@ -4,7 +4,7 @@ from .models import Post
 
 class PostListView(ListView):
     queryset = Post.published.all()
-    paginate_by = 12
+    paginate_by = 1
     context_object_name = 'posts'
     template_name = 'blog/post/list.html'
 

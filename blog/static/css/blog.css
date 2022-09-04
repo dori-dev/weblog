@@ -56,8 +56,25 @@ p.date {
 .pagination a,
 .pagination .current {
     border-radius: 5px;
-    margin: 0 3px;
-    padding: 3px 6px;
+    margin: 0 7px;
+}
+
+.end-next {
+    margin-left: 0 !important;
+}
+
+.next {
+    margin-right: 2px !important;
+    margin-left: 10px !important;
+}
+
+.first-previous {
+    margin-right: 0 !important;
+}
+
+.previous {
+    margin-left: 2px !important;
+    margin-right: 10px !important;
 }
 
 a.disable {
