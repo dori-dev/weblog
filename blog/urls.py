@@ -9,4 +9,9 @@ urlpatterns = [
         views.post_detail,
         name='post_detail'
     ),
+    path(
+        'tag/<slug:slug>/',
+        views.PostTagListView.as_view(),
+        name='post_list_by_tag'
+    )
 ]

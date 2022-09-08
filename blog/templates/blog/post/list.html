@@ -1,8 +1,19 @@
 {% extends "blog/base.html" %}
-{% block title %}My Blog{% endblock %}
 
-{% block content %}
+{% block title %}
+{% if tag %}
+{{ tag }}
+{% else %}
+My Blog
+{% endif %}
+{% endblock %}
+
+{% block content %}  
+  {% if tag %}
+  <h1>#{{ tag }}</h1>
+  {% else %}
   <h1>My Blog</h1>
+  {% endif %}
   {% for post in posts %}
     <h2>
       <a href="{{ post.get_absolute_url }}">
@@ -10,9 +21,12 @@
       </a>
     </h2>
     <p class="tags">
-      {% if post.tags.all %}
-        Tags: {{ post.tags.all|join:", " }}
-      {% endif %}
+      {% for tag in post.tags.all %}
+      <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+        {{ tag.name }}
+      </a>
+      {% if not forloop.last %}|{% endif %}
+      {% endfor %}
     </p>
     <p class="date">
       Published {{ post.published_time }} by {{ post.author }}

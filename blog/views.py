@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.handlers.wsgi import WSGIRequest
-from django.views.generic import ListView, View
+from django.views.generic import ListView
+from taggit.models import Tag
 
 from .models import Post, Comment
 from .forms import CommentForm
@@ -11,6 +12,30 @@ class PostListView(ListView):
     paginate_by = 6
     context_object_name = 'posts'
     template_name = 'blog/post/list.html'
+
+
+class PostTagListView(ListView):
+    paginate_by = 6
+    context_object_name = 'posts'
+    template_name = 'blog/post/list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_slug = self.kwargs.get('slug')
+        tag = Tag.objects.filter(
+            slug=tag_slug
+        )
+        if tag.exists():
+            context['tag'] = tag.first()
+        else:
+            context['tag'] = tag_slug
+        return context
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('slug')
+        return Post.published.filter(
+            tags__slug=tag_slug,
+        )
 
 
 def post_detail(request: WSGIRequest, slug: str):
