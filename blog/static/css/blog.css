@@ -1,146 +1,142 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: helvetica, sans-serif;
-    font-size: 18px;
+  margin: 0;
+  padding: 0;
+  font-family: helvetica, sans-serif;
+  font-size: 18px;
 }
 
 a {
-    color: #00abff;
-    text-decoration: none;
+  color: #00abff;
+  text-decoration: none;
 }
 
 h1 {
-    font-weight: normal;
-    border-bottom: 1px solid #bbb;
-    padding: 0 0 10px 0;
+  font-weight: normal;
+  border-bottom: 1px solid #bbb;
+  padding: 0 0 10px 0;
 }
 
 h2 {
-    font-weight: normal;
-    margin: 30px 0 0;
+  font-weight: normal;
+  margin: 30px 0 0;
 }
 
 #content {
-    float: left;
-    width: 60%;
-    padding: 0 0 0 30px;
+  float: left;
+  width: 60%;
+  padding: 0 0 0 30px;
 }
 
 #sidebar {
-    float: right;
-    width: 30%;
-    padding: 10px;
-    background: #efefef;
-    height: 100%;
+  float: right;
+  width: 30%;
+  padding: 10px;
+  background: #efefef;
+  height: 100%;
 }
 
 p.date {
-    color: #555;
-    font-family: georgia, serif;
-    font-size: 14px;
-    font-style: italic;
+  color: #555;
+  font-family: georgia, serif;
+  font-size: 14px;
+  font-style: italic;
 }
 
 /* pagination */
 .pagination {
-    margin: 40px 0;
-    font-weight: bold;
+  margin: 40px 0;
+  font-weight: bold;
 }
 
-
 .pagination .step-links {
-    display: flex;
+  display: flex;
 }
 
 .pagination a,
 .pagination .current {
-    border-radius: 5px;
-    margin: 0 7px;
+  border-radius: 5px;
+  margin: 0 7px;
 }
 
 .end-next {
-    margin-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .next {
-    margin-right: 2px !important;
-    margin-left: 10px !important;
+  margin-right: 2px !important;
+  margin-left: 10px !important;
 }
 
 .first-previous {
-    margin-right: 0 !important;
+  margin-right: 0 !important;
 }
 
 .previous {
-    margin-left: 2px !important;
-    margin-right: 10px !important;
+  margin-left: 2px !important;
+  margin-right: 10px !important;
 }
 
 a.disable {
-    color: #777;
-    pointer-events: none;
-    cursor: unset
+  color: #777;
+  pointer-events: none;
+  cursor: unset;
 }
 
 .pagination a svg {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    fill: #00abff;
-    margin: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  fill: #00abff;
+  margin: 0;
 }
 
 .pagination a.disable svg {
-    fill: #777;
+  fill: #777;
 }
 
 /* forms */
 label {
-    float: left;
-    clear: both;
-    color: #333;
-    margin-bottom: 4px;
+  display: block;
+  color: #333;
+  margin-bottom: 4px;
 }
 
 input,
 textarea {
-    clear: both;
-    float: left;
-    margin: 0 0 10px;
-    background: #ededed;
-    border: 0;
-    padding: 6px 10px;
-    font-size: 12px;
+  margin: 0 0 10px;
+  background: #ededed;
+  border: 0;
+  padding: 6px 10px;
+  font-size: 12px;
 }
 
-input[type=submit] {
-    font-weight: bold;
-    background: #00abff;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 14px;
-    text-transform: uppercase;
+input[type="submit"] {
+  font-weight: bold;
+  background: #00abff;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-transform: uppercase;
 }
 
 .errorlist {
-    color: #cc0033;
-    float: left;
-    clear: both;
-    padding-left: 10px;
+  color: #cc0033;
+  float: left;
+  clear: both;
+  padding-left: 10px;
 }
 
 /* comments */
 .comment {
-    padding: 10px;
+  padding: 10px;
 }
 
 .comment:nth-child(even) {
-    background: #efefef;
+  background: #efefef;
 }
 
 .comment .info {
-    font-weight: bold;
-    font-size: 12px;
-    color: #666;
+  font-weight: bold;
+  font-size: 12px;
+  color: #666;
 }

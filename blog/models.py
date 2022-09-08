@@ -11,13 +11,6 @@ class PublishManager(models.Manager):
         )
 
 
-class ActiveManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(
-            active=True,
-        )
-
-
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = "draft"
@@ -88,8 +81,15 @@ class Comment(models.Model):
     active = models.BooleanField(
         default=True,
     )
-    objects = models.Manager()
-    actives = ActiveManager()
+
+    def allow_to_send(self,):
+        exists = Comment.objects.filter(
+            post=self.post,
+            email=self.email,
+        ).exists()
+        if exists:
+            return False
+        return True
 
     def __str__(self) -> str:
         return f'Comment by {self.name} on {self.post}'

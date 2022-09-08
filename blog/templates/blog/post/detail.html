@@ -7,4 +7,38 @@
     Published {{ post.published_time }} by {{ post.author }}
   </p>
   {{ post.body|linebreaks }}
+  
+  {% with comments.count as total_comments %}
+    <h2>
+      {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+  {% endwith %}
+  
+  
+  {% if send_comment %}
+  <h2>Your comment has been added.</h2>
+  {% else %}
+  <form action="" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p>
+      <input type="submit" value="Send">
+    </p>
+  </form>
+  {% endif %}
+  <br>
+  
+
+  {% for comment in comments %}
+  <div class="comment">
+    <p class="info">
+      {{ comment.name }} at {{ comment.created_at }}
+    </p>
+    {{ comment.body|linebreaks }}
+  </div>
+  {% empty %}
+  <p>There are no comments yet.</p>
+  {% endfor %}
+  <br>
+  <br>
 {% endblock %}

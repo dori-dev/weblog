@@ -1,5 +1,9 @@
-from django.views.generic import DetailView, ListView
-from .models import Post
+from django.shortcuts import render, get_object_or_404
+from django.core.handlers.wsgi import WSGIRequest
+from django.views.generic import ListView, View
+
+from .models import Post, Comment
+from .forms import CommentForm
 
 
 class PostListView(ListView):
@@ -9,7 +13,30 @@ class PostListView(ListView):
     template_name = 'blog/post/list.html'
 
 
-class PostDetailView(DetailView):
-    queryset = Post.published.all()
-    context_object_name = 'post'
-    template_name = 'blog/post/detail.html'
+def post_detail(request: WSGIRequest, slug: str):
+    post = get_object_or_404(
+        Post,
+        slug=slug,
+        status='published',
+    )
+    comments = post.comments.filter(
+        active=True,
+    )
+    send_comment = None
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment: Comment = form.save(commit=False)
+            comment.post = post
+            if comment.allow_to_send():
+                comment.save()
+            send_comment = True
+    else:
+        form = CommentForm()
+    context = {
+        'post': post,
+        'comments': comments,
+        'form': form,
+        'send_comment': send_comment,
+    }
+    return render(request, 'blog/post/detail.html', context)

@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name='post_list'),
     path(
         '<slug:slug>/',
-        views.PostDetailView.as_view(),
+        views.post_detail,
         name='post_detail'
     ),
 ]
