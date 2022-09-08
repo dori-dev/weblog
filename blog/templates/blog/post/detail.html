@@ -7,14 +7,22 @@
     Published {{ post.published_time }} by {{ post.author }}
   </p>
   {{ post.body|linebreaks }}
-  
+  <p class="tags">
+    {% for tag in post.tags.all %}
+    <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+      {{ tag.name }}
+    </a>
+    {% if not forloop.last %}|{% endif %}
+    {% endfor %}
+  </p>
+  <br>
+
   {% with comments.count as total_comments %}
     <h2>
       {{ total_comments }} comment{{ total_comments|pluralize }}
     </h2>
   {% endwith %}
-  
-  
+
   {% if send_comment %}
   <h2>Your comment has been added.</h2>
   {% else %}
@@ -27,7 +35,6 @@
   </form>
   {% endif %}
   <br>
-  
 
   {% for comment in comments %}
   <div class="comment">
