@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 
-class PublishedManager(models.Manager):
+class PublishManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(
             status='published',
@@ -34,15 +34,15 @@ class Post(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='blog_posts',
+        related_name='posts',
     )
-    created_time = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
     )
-    updated_time = models.DateTimeField(
+    updated_at = models.DateTimeField(
         auto_now=True,
     )
-    published_time = models.DateTimeField(
+    published_at = models.DateTimeField(
         default=timezone.now,
     )
     status = models.CharField(
@@ -51,7 +51,7 @@ class Post(models.Model):
         default='draft',
     )
     objects = models.Manager()
-    published = PublishedManager()
+    published = PublishManager()
 
     def get_absolute_url(self):
         return reverse(
@@ -64,7 +64,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = (
-            '-published_time',
+            '-published_at',
         )
 
 
@@ -79,10 +79,10 @@ class Comment(models.Model):
     )
     email = models.EmailField()
     body = models.TextField()
-    created = models.DateTimeField(
+    created_at = models.DateTimeField(
         auto_now_add=True,
     )
-    updated = models.DateTimeField(
+    updated_at = models.DateTimeField(
         auto_now=True,
     )
     active = models.BooleanField(
@@ -96,5 +96,5 @@ class Comment(models.Model):
 
     class Meta:
         ordering = (
-            'created',
+            'created_at',
         )

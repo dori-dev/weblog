@@ -8,7 +8,7 @@ class PostAdmin(admin.ModelAdmin):
         'title',
         'slug',
         'author',
-        'published_time',
+        'published_at',
         'status',
     )
     list_filter = (
@@ -20,7 +20,7 @@ class PostAdmin(admin.ModelAdmin):
         'body',
         'author__username',
     )
-    date_hierarchy = 'published_time'
+    date_hierarchy = 'published_at'
     prepopulated_fields = {
         'slug': (
             'title',
@@ -37,7 +37,7 @@ class CommentAdmin(admin.ModelAdmin):
         'name',
         'post',
         'email',
-        'created',
+        'created_at',
         'active',
     )
     list_filter = (
@@ -49,7 +49,7 @@ class CommentAdmin(admin.ModelAdmin):
         'email',
         'body',
     )
-    date_hierarchy = 'updated'
+    date_hierarchy = 'updated_at'
     raw_id_fields = (
         'post',
     )
