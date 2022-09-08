@@ -9,6 +9,11 @@
         {{ post.title }}
       </a>
     </h2>
+    <p class="tags">
+      {% if post.tags.all %}
+        Tags: {{ post.tags.all|join:", " }}
+      {% endif %}
+    </p>
     <p class="date">
       Published {{ post.published_time }} by {{ post.author }}
     </p>

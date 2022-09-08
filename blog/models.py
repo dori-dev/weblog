@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 
+from taggit.managers import TaggableManager
+
 
 class PublishManager(models.Manager):
     def get_queryset(self):
@@ -43,6 +45,8 @@ class Post(models.Model):
         choices=Status.choices,
         default='draft',
     )
+    tags = TaggableManager()
+
     objects = models.Manager()
     published = PublishManager()
 
