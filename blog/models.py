@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models import Count
+from django.db.models.signals import post_save
+from django.db import transaction
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
@@ -11,6 +15,12 @@ class PublishManager(models.Manager):
         return super().get_queryset().filter(
             status='published',
         )
+
+
+def on_transaction_commit(func):
+    def inner(*args, **kwargs):
+        transaction.on_commit(lambda: func(*args, **kwargs))
+    return inner
 
 
 class Post(models.Model):
@@ -46,6 +56,10 @@ class Post(models.Model):
         default='draft',
     )
     tags = TaggableManager()
+    related_posts = models.ManyToManyField(
+        'self',
+        blank=True,
+    )
 
     objects = models.Manager()
     published = PublishManager()
@@ -63,6 +77,26 @@ class Post(models.Model):
         ordering = (
             '-published_at',
         )
+
+
+@receiver(post_save, sender=Post)
+@on_transaction_commit
+def set_related_posts(instance: Post, **kwargs):
+    tags = instance.tags.values_list(
+        'id',
+        flat=True,
+    )
+    related_posts = (
+        Post.published
+        .filter(tags__in=tags)
+        .distinct()
+        .exclude(id=instance.id)
+        .annotate(same_tags=Count('tags'))
+        .order_by('-same_tags', '-published_at')
+        .values_list('id', flat=True)[:4]
+    )
+    instance.related_posts.clear()
+    instance.related_posts.add(*related_posts)
 
 
 class Comment(models.Model):

@@ -8,6 +8,7 @@
   </p>
   {{ post.body|linebreaks }}
   <p class="tags">
+    Tags:
     {% for tag in post.tags.all %}
     <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
       {{ tag.name }}
@@ -16,6 +17,30 @@
     {% endfor %}
   </p>
   <br>
+
+  <h2>Related Posts</h2>
+  {% for post in post.related_posts.all %}
+    <h2>
+      <a href="{{ post.get_absolute_url }}">
+        {{ post.title }}
+      </a>
+    </h2>
+    <p class="tags">
+      {% for tag in post.tags.all %}
+        <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+          {{ tag.name }}
+        </a>
+        {% if not forloop.last %}|{% endif %}
+      {% endfor %}
+    </p>
+    <p class="date">
+      Published {{ post.published_time }} by {{ post.author }}
+    </p>
+    {{ post.body|truncatewords:30|linebreaks }}
+  {% empty %}
+    The are no similar posts yet.
+  {% endfor %}
+    
 
   {% with comments.count as total_comments %}
     <h2>

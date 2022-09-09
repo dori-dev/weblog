@@ -44,6 +44,7 @@ def post_detail(request: WSGIRequest, slug: str):
         slug=slug,
         status='published',
     )
+    print(post.related_posts.all())
     comments = post.comments.filter(
         active=True,
     )
