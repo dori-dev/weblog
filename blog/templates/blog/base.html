@@ -13,8 +13,10 @@
       <p>
         This is my blog.
         <br />
-        I've written {% total_posts %} posts so far.
+        I've written {% posts_count %} posts so far.
       </p>
+      <h3>Latest Posts</h3>
+      {% latest_posts 6 %}
     </div>
   </body>
 </html>
