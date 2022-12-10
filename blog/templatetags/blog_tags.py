@@ -1,3 +1,4 @@
+from datetime import datetime
 from ..models import Post
 from django import template
 from django.db.models import Count
@@ -37,3 +38,10 @@ def get_most_commented_posts(count: int = 3):
     return {
         'most_commented_posts': most_commented_posts,
     }
+
+
+@register.filter('formatted')
+def change_datetime_format(value: datetime, format: str = None):
+    if format is None:
+        format = '%B %d, %I:%M %p'
+    return value.strftime(format)
