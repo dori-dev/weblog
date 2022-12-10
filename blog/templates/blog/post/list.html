@@ -29,7 +29,7 @@
       {% endfor %}
     </p>
     <p class="date">
-      Published {{ post.published_at | formatted:'%b %d, %I:%M %p' }} by {{ post.author }}
+      Published at {{ post.published_at | formatted:'%b %d, %I:%M %p' }} by {{ post.author }}
     </p>
     {{ post.body|truncatewords:30|linebreaks }}
   {% endfor %}
