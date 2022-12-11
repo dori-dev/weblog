@@ -9,7 +9,7 @@ from .forms import CommentForm
 
 class PostListView(ListView):
     queryset = Post.published.all()
-    paginate_by = 6
+    paginate_by = 12
     context_object_name = 'posts'
     template_name = 'blog/post/list.html'
 
