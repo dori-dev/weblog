@@ -15,6 +15,9 @@
         <br />
         I've written {% posts_count %} posts so far.
       </p>
+      <p>
+        <a target="_blank" href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed.</a>
+      </p>
       <h3>Latest Posts</h3>
       {% latest_posts 6 %}
       <h3>Most commented posts</h3>
