@@ -1,2 +1,4 @@
 Django==4.1
 django-taggit==3.0.0
+django-dotenv==1.4.2
+psycopg2-binary==2.9.5
