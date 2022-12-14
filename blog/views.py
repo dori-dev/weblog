@@ -1,10 +1,11 @@
+from django.contrib.postgres.search import SearchVector
 from django.shortcuts import render, get_object_or_404
 from django.core.handlers.wsgi import WSGIRequest
 from django.views.generic import ListView
 from taggit.models import Tag
 
 from .models import Post, Comment
-from .forms import CommentForm
+from .forms import CommentForm, SearchForm
 
 
 class PostListView(ListView):
@@ -66,3 +67,22 @@ def post_detail(request: WSGIRequest, slug: str):
         'send_comment': send_comment,
     }
     return render(request, 'blog/post/detail.html', context)
+
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.published.annotate(
+                search=SearchVector('title', 'body'),
+            ).filter(search=query)
+    context = {
+        'form': form,
+        'query': query,
+        'results': results,
+    }
+    return render(request, 'blog/post/search.html', context)
