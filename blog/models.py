@@ -30,11 +30,14 @@ class Post(models.Model):
         PUBLISHED = "published"
 
     title = models.CharField(
-        max_length=256,
+        max_length=128,
     )
     slug = models.CharField(
-        max_length=256,
+        max_length=128,
         unique=True,
+    )
+    description = models.CharField(
+        max_length=256,
     )
     body = RichTextUploadingField()
     author = models.ForeignKey(

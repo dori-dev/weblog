@@ -16,7 +16,7 @@
           {{ post.title }}
         </a>
       </h4>
-      {{ post.body|safe|truncatewords:10 }}
+      {{ post.description }}
     {% empty %}
     {% if most_similar_word %}
       <p>

@@ -37,7 +37,7 @@
     <p class="date">
       Published at {{ post.published_at | formatted }} by {{ post.author }}
     </p>
-    {{ post.body|safe|truncatewords:10|linebreaks }}
+    {{ post.description }}
   {% empty %}
     The are no similar posts yet.
   {% endfor %}
