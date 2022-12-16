@@ -4,6 +4,16 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import Post, Comment
 
 
+@admin.action(description='Published selected posts')
+def set_post_status_published(modeladmin, request, queryset):
+    queryset.update(status='published')
+
+
+@admin.action(description="Draft selected posts")
+def set_post_status_draft(modeladmin, request, queryset):
+    queryset.update(status='draft')
+
+
 class PostAdminForm(forms.ModelForm):
     body = forms.CharField(widget=CKEditorUploadingWidget())
 
@@ -15,6 +25,16 @@ class PostAdminForm(forms.ModelForm):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
+    fieldsets = [
+        (
+            None, {
+                'fields': [
+                    'title', 'slug', 'description', 'body',
+                    'author', 'published_at', 'status', 'tags'
+                ]
+            }
+        ),
+    ]
     list_display = (
         'title',
         'slug',
@@ -40,15 +60,9 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = (
         'author',
     )
-    fieldsets = [
-        (
-            None, {
-                'fields': [
-                    'title', 'slug', 'description', 'body',
-                    'author', 'published_at', 'status', 'tags'
-                ]
-            }
-        ),
+    actions = [
+        set_post_status_published,
+        set_post_status_draft,
     ]
 
 
