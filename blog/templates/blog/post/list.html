@@ -31,7 +31,7 @@
     <p class="date">
       Published at {{ post.published_at | formatted:'%b %d, %I:%M %p' }} by {{ post.author }}
     </p>
-    {{ post.body|truncatewords:30|linebreaks }}
+    {{ post.body|safe|truncatewords:10|linebreaks }}
   {% endfor %}
   {% include 'blog/pagination.html' with page=page_obj %}
 {% endblock %}

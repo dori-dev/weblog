@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from taggit.managers import TaggableManager
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class PublishManager(models.Manager):
@@ -35,7 +36,7 @@ class Post(models.Model):
         max_length=256,
         unique=True,
     )
-    body = models.TextField()
+    body = RichTextUploadingField()
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

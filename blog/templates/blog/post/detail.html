@@ -7,7 +7,7 @@
   <p class="date">
     Published at {{ post.published_at | formatted }} by {{ post.author }}
   </p>
-  {{ post.body|linebreaks }}
+  {{ post.body|safe|linebreaks }}
   <p class="tags">
     Tags:
     {% for tag in post.tags.all %}
@@ -37,7 +37,7 @@
     <p class="date">
       Published at {{ post.published_at | formatted }} by {{ post.author }}
     </p>
-    {{ post.body|truncatewords:30|linebreaks }}
+    {{ post.body|safe|truncatewords:10|linebreaks }}
   {% empty %}
     The are no similar posts yet.
   {% endfor %}

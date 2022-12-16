@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     # third party
     'taggit',
+    'ckeditor',
+    'ckeditor_uploader',
     # local apps
     'blog.apps.BlogConfig',
 ]
@@ -127,11 +129,82 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'blog/static',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CKEDITOR Settings
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_CONFIGS = {
+    'default': {
+        "width": "100%",
+        'skin': 'moono-lisa',
+        'resize_enabled': False,
+        'tabSpaces': 4,
+        'toolbar': 'Custom',
+        # 'toolbar': 'full',
+        'toolbarCanCollapse': True,
+        'toolbar_Custom': [
+            [
+                'Source', '-', 'NewPage', 'SelectAll',
+                'Preview', 'Templates', 'ShowBlocks',
+            ],
+            [
+                'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo',
+                'Redo', '-', 'Find', 'Replace', '-', 'Maximize',
+            ],
+            '/',
+            [
+                'Form', '-', 'TextField', 'Textarea', 'HiddenField',
+                '-', 'Checkbox', 'Radio', 'Select', 'Button',
+                'ImageButton', '-', 'NumberedList', 'BulletedList',
+                'Outdent', 'Indent', '-', 'Blockquote',
+            ],
+            '/',
+            [
+                'Bold', 'Italic', 'Underline', 'Strike',
+                'Subscript', 'Superscript', 'RemoveFormat', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+                'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+            ],
+            [
+                'Image', 'Embed', 'Table', 'HorizontalRule',
+                'Smiley', 'SpecialChar', 'PageBreak',
+                'Iframe', '-', 'Link', 'Unlink'
+            ],
+            '/',
+            [
+                'TextColor', 'BGColor', '-', 'Styles',
+                'Format', 'Font', 'FontSize'
+            ],
+        ],
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'embed',
+            'embedsemantic',
+            'embedbase',
+        ]),
+    }
+}
