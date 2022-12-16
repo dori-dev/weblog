@@ -8,6 +8,7 @@ from taggit.models import Tag
 
 from .models import Post, Comment
 from .forms import CommentForm, SearchForm
+from .utils import get_most_similar_word
 
 
 class PostListView(ListView):
@@ -74,6 +75,7 @@ def post_detail(request: WSGIRequest, slug: str):
 def post_search(request):
     form = SearchForm()
     query = None
+    most_similar_word = None
     results = []
     if 'query' in request.GET:
         form = SearchForm(request.GET)
@@ -82,13 +84,19 @@ def post_search(request):
             search_vector = SearchVector('title', weight='A') + \
                 SearchVector('body', weight='B')
             search_query = SearchQuery(query)
+
             results = Post.published.annotate(
                 search=search_vector,
                 rank=SearchRank(search_vector, search_query),
             ).filter(search=search_query).order_by('-rank')
+            if not results:
+                most_similar_word = get_most_similar_word(query)
+                if most_similar_word == query:
+                    most_similar_word = None
     context = {
         'form': form,
         'query': query,
         'results': results,
+        'most_similar_word': most_similar_word,
     }
     return render(request, 'blog/post/search.html', context)

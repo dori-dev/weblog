@@ -18,6 +18,14 @@
       </h4>
       {{ post.body|truncatewords:10 }}
     {% empty %}
+    {% if most_similar_word %}
+      <p>
+        Did you mean:
+        <a href="{% url 'blog:post_search' %}?query={{ most_similar_word }}">
+          {{ most_similar_word }}
+        </a>
+      </p>
+    {% endif %}
     <p>There are no results for your query.</p>
     {% endfor %}
     <p>
