@@ -40,6 +40,16 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = (
         'author',
     )
+    fieldsets = [
+        (
+            None, {
+                'fields': [
+                    'title', 'slug', 'description', 'body',
+                    'author', 'published_at', 'status', 'tags'
+                ]
+            }
+        ),
+    ]
 
 
 @admin.register(Comment)

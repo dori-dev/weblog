@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.db import transaction
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVector, SearchVectorField
 from django.utils import timezone
 from django.urls import reverse
 
@@ -16,6 +18,13 @@ class PublishManager(models.Manager):
         return super().get_queryset().filter(
             status='published',
         )
+
+
+class PostManager(models.Manager):
+    def with_documents(self):
+        vector = SearchVector('title', weight='A') + \
+            SearchVector('body', weight='B')
+        return self.get_queryset().annotate(document=vector)
 
 
 def on_transaction_commit(func):
@@ -64,8 +73,12 @@ class Post(models.Model):
         'self',
         blank=True,
     )
+    search_vector = SearchVectorField(
+        null=True,
+        blank=True,
+    )
 
-    objects = models.Manager()
+    objects = PostManager()
     published = PublishManager()
 
     def get_absolute_url(self):
@@ -74,6 +87,16 @@ class Post(models.Model):
             args=(self.slug,)
         )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        change_search_vector = "update_fields" not in kwargs \
+            or "search_vector" not in kwargs["update_fields"]
+        if change_search_vector:
+            instance: Post = self._meta.default_manager\
+                .with_documents().get(pk=self.pk)
+            instance.search_vector = instance.document
+            instance.save(update_fields=["search_vector"])
+
     def __str__(self):
         return self.title
 
@@ -81,6 +104,12 @@ class Post(models.Model):
         ordering = (
             '-published_at',
         )
+        indexes = [
+            GinIndex(
+                fields=["search_vector"],
+                name="title_body_index",
+            ),
+        ]
 
 
 @receiver(post_save, sender=Post)
