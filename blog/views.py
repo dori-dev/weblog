@@ -90,7 +90,10 @@ def post_search(request):
                 rank=SearchRank(search_vector, search_query),
             ).filter(search=search_query).order_by('-rank')
             if not results:
-                most_similar_word = get_most_similar_word(query)
+                try:
+                    most_similar_word = get_most_similar_word(query)
+                except Exception:
+                    most_similar_word = None
                 if most_similar_word == query:
                     most_similar_word = None
     context = {
