@@ -32,18 +32,13 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Change .Env Files
-
-set your environment variables in `.env.local` to `.env.production`.<br>
-<br>
-
-## Set STATE Variable
-
-if you doesn't set `STATE` environ variable, project run with `debug=False`
+## Create .Env File
 
 ```
-export STATE=LOCAL
+mv .env.example .env
 ```
+
+And set your environment variables in `.env`.<br>
 
 ## Create Extension
 
